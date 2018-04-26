@@ -1,0 +1,91 @@
+version: '2'
+services:
+  # ActiveMQ
+  activemq:
+    image: webcenter/activemq:latest
+    ports:
+      - 8161:8161
+      - 61616:61616
+      - 61613:61613
+    environment:
+      ACTIVEMQ_NAME: amq
+      ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT: 'True'
+      ACTIVEMQ_ADMIN_LOGIN: admin
+      ACTIVEMQ_ADMIN_PASSWORD: admin
+
+  # Debezium
+  zookeeper:
+    image: debezium/zookeeper:0.7.5
+    ports:
+     - 2181:2181
+     - 2888:2888
+     - 3888:3888
+  kafka:
+    image: debezium/kafka:0.7.5
+    ports:
+     - 9092:9092
+    links:
+     - zookeeper
+    environment:
+     - ZOOKEEPER_CONNECT=zookeeper:2181
+  mysql:
+    image: rxes/mysql:latest
+    ports:
+     - 3306:3306
+    environment:
+     - MYSQL_ROOT_PASSWORD=debezium
+  connect:
+    image: debezium/connect:0.7.5
+    ports:
+     - 8083:8083
+    links:
+     - kafka
+     - mysql
+    depends_on:
+     - mysql 
+    environment:
+     - BOOTSTRAP_SERVERS=kafka:9092
+     - GROUP_ID=1
+     - CONFIG_STORAGE_TOPIC=my_connect_configs
+     - OFFSET_STORAGE_TOPIC=my_connect_offsets
+
+  # RXES
+  data-generator:
+    image: rxes/data-generator
+    links:
+      - mysql
+    environment:
+      - MYSQL_USER=my-user
+      - MYSQL_PASSWORD=password
+    depends_on:
+      - mysql
+      
+  data-dispatcher:
+    image: rxes/data-dispatcher
+    ports:
+     - 8084:8084
+    depends_on:
+      - kafka
+      - activemq
+      - mysql
+      - connect
+    links:
+      - kafka
+
+  web-app:
+      image: rxes/web-app
+      ports:
+       - 8080:8080
+      depends_on:
+        - activemq
+        - data-dispatcher
+      links:
+        - activemq
+
+  alerting:
+      image: rxes/alerting
+      depends_on:
+        - kafka
+        - data-dispatcher
+      links:
+        - kafka

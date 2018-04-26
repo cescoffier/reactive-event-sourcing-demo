@@ -1,0 +1,8 @@
+
+# Ignore the file containing the twilio credentials
+alerting/src/main/resources/secrets.json
+
+.vertx
+*.iml
+.idea
+target

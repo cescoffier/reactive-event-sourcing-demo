@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+</head>
+<body>
+<div class="container">
+
+    <!-- Just enjoy various PatternFly components -->
+    <div class="alert alert-success">
+        <span class="pficon pficon-ok"></span>
+        <strong>Great job!</strong> This is really working out <a href="#" class="alert-link">great for us</a>.
+    </div>
+
+    <div id="measures">
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.1/vertx-eventbus.min.js"></script>
+
+<script>
+    $( document ).ready(function() {
+        console.log("ready...");
+
+        var eb = new EventBus('/eventbus');
+
+        eb.onopen = function () {
+            eb.registerHandler('health', function (error, msg) {
+                console.log("Message: ", msg);
+                console.log(JSON.stringify(msg));
+                var data = msg["body"];
+                $("#measures")
+                    .append(data.patient + " " + data.temperature + " " + data.glucose + "<br/>");
+            });
+        };
+    });
+</script>
+
+</body>
+</html>
