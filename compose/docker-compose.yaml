@@ -51,7 +51,7 @@ services:
 
   # RXES
   data-generator:
-    image: rxes/data-generator
+    image: rxes/data-generator-fluid
     links:
       - mysql
     environment:
@@ -61,7 +61,7 @@ services:
       - mysql
       
   data-dispatcher:
-    image: rxes/data-dispatcher
+    image: rxes/data-dispatcher-fluid
     ports:
      - 8084:8084
     depends_on:
@@ -73,7 +73,7 @@ services:
       - kafka
 
   web-app:
-      image: rxes/web-app
+      image: rxes/web-app-fuid
       ports:
        - 8080:8080
       depends_on:
@@ -83,7 +83,7 @@ services:
         - activemq
 
   alerting:
-      image: rxes/alerting
+      image: rxes/alerting-fluid
       depends_on:
         - kafka
         - data-dispatcher

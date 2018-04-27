@@ -1,0 +1,33 @@
+# global config
+kafka:
+  bootstrap.servers: kafka:9092
+  key.serializer: org.apache.kafka.common.serialization.StringSerializer
+  key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+  acks: 1
+  group.id: the_group
+
+# Configure the sources
+sources:
+  # Measures
+   health:
+      type: kafka
+      topic: health
+      value.serializer: io.vertx.kafka.client.serialization.JsonObjectSerializer
+      value.deserializer: io.vertx.kafka.client.serialization.JsonObjectDeserializer
+      multicast.buffer.size: 10
+
+  # Internal event bus address to dispatch the alerts
+   alerts:
+      type: eventbus
+      address: alerts
+
+# Configure the sinks
+sinks:
+  # Internal message bus.
+  alerts:
+      type: eventbus
+      address: alerts
+
+
+
+

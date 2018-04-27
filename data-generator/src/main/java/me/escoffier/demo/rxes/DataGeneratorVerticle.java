@@ -16,7 +16,7 @@ public class DataGeneratorVerticle extends AbstractVerticle {
     private static final Logger LOGGER = LogManager.getLogger("Data-Generator");
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         createPatients();
     }
 

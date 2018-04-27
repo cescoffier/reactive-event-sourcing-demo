@@ -19,15 +19,22 @@
   <dependencies>
     <dependency>
       <groupId>io.vertx</groupId>
-      <artifactId>vertx-rx-java2</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.vertx</groupId>
       <artifactId>vertx-amqp-bridge</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.vertx</groupId>
-      <artifactId>vertx-kafka-client</artifactId>
+      <groupId>me.escoffier.fluid</groupId>
+      <artifactId>fluid</artifactId>
+      <version>${fluid.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>me.escoffier.fluid</groupId>
+      <artifactId>kafka-connector</artifactId>
+      <version>${fluid.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>me.escoffier.fluid</groupId>
+      <artifactId>vertx-eventbus-connector</artifactId>
+      <version>${fluid.version}</version>
     </dependency>
   </dependencies>
 

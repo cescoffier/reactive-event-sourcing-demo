@@ -19,6 +19,7 @@
   
   <properties>
     <vertx.version>3.5.1</vertx.version>
+    <fluid.version>1.0-SNAPSHOT</fluid.version>
     <vertx-maven-plugin.version>1.0.13</vertx-maven-plugin.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

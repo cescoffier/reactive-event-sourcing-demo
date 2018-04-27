@@ -1,6 +1,6 @@
 package me.escoffier.demo.alert;
 
-import io.vertx.reactivex.core.Vertx;
+import me.escoffier.fluid.framework.Fluid;
 
 /**
  * @author <a href="http://escoffier.me">Clement Escoffier</a>
@@ -8,9 +8,10 @@ import io.vertx.reactivex.core.Vertx;
 public class Main {
 
     public static void main(String[] args) {
-        Vertx vertx = Vertx.vertx();
-
-        vertx.deployVerticle(AlertDispatcherVerticle.class.getName());
-        vertx.deployVerticle(MeasureAnalyserVerticle.class.getName());
+        Fluid fluid = new Fluid();
+        fluid.deploy(new AlertDispatcher(fluid.vertx()));
+        fluid.deploy(TemperatureAlert.class);
+        fluid.deploy(GlucoseAlert.class);
+        fluid.deploy(BloodPressureAlert.class);
     }
 }
