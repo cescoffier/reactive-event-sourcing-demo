@@ -74,7 +74,7 @@ services:
       - kafka
 
   web-app:
-      image: rxes/web-app-fuid
+      image: rxes/web-app-fluid
       ports:
        - 8080:8080
       depends_on:

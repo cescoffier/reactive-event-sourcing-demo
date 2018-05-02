@@ -8,10 +8,10 @@ import me.escoffier.fluid.framework.Fluid;
 public class Main {
 
     public static void main(String[] args) {
-        Fluid fluid = new Fluid();
-        fluid.deploy(new AlertDispatcher(fluid.vertx()));
-        fluid.deploy(TemperatureAlert.class);
-        fluid.deploy(GlucoseAlert.class);
-        fluid.deploy(BloodPressureAlert.class);
+        Fluid fluid = Fluid.create();
+        fluid.deploy(new AlertDispatcher(fluid.vertx()))
+            .deploy(TemperatureAlert.class)
+            .deploy(GlucoseAlert.class)
+            .deploy(BloodPressureAlert.class);
     }
 }
