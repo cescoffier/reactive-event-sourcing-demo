@@ -1,0 +1,51 @@
+<div class="row row-cards-pf">
+    <div class="col-xs-12 col-md-8">
+        <h1>{{name}}</h1>
+        <p><strong>Age:</strong> {{age}} | <strong>Gender:</strong> Male | <strong>Weight:</strong> {{weight}}kg  |
+            <strong>Size:</strong> {{height}}cm</p>
+    </div>
+    
+    <div class="col-xs-12 col-md-12">
+        <div class="card-pf card-pf-utilization">
+            <div class="card-pf-heading">
+            </div>
+            <div class="card-pf-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <h3 class="card-pf-subtitle">Blood Pressure</h3>
+                        <p class="card-pf-utilization-details">
+                        </p>
+                        <div id="{{name}}-systolic-chart"></div>
+                        <div class="chart-pf-sparkline" id="{{name}}-diastolic-chart"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <h3 class="card-pf-subtitle">Body Temperature</h3>
+                        <p class="card-pf-utilization-details"></p>
+                        <div id="{{name}}-temperature-chart"></div>
+                        <div class="chart-pf-sparkline" id="{{name}}-temperature-line-chart"></div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <h3 class="card-pf-subtitle">Glucose in blood</h3>
+                        <p class="card-pf-utilization-details"></p>
+                        <div id="{{name}}-glucose-chart"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /col -->
+
+    <!--<div class="col-xs-12 col-md-4">-->
+        <!--<div class="card-pf">-->
+            <!--<div class="card-pf-heading">-->
+                <!--<h2 class="card-pf-title">-->
+                    <!--Glucose in blood-->
+                <!--</h2>-->
+            <!--</div>-->
+            <!--<div class="card-pf-body">-->
+                <!--<div id="{{name}}-glucose-chart"></div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    
+</div>

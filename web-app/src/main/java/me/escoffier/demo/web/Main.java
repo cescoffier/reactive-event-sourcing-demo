@@ -13,6 +13,8 @@ import io.vertx.reactivex.ext.web.RoutingContext;
 import io.vertx.reactivex.ext.web.handler.StaticHandler;
 import io.vertx.reactivex.ext.web.handler.sockjs.SockJSHandler;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author <a href="http://escoffier.me">Clement Escoffier</a>
  */
@@ -51,6 +53,7 @@ public class Main {
                 .createConsumer("health-data");
             consumer.toFlowable()
                 .map(Message::body)
+                .sample(500, TimeUnit.MILLISECONDS)
                 .forEach(json -> {
                     JsonObject payload = json.getJsonObject(AmqpConstants.BODY);
                     vertx.eventBus().publish("health", payload);

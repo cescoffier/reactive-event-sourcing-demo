@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Patternfly Dashboard</title>
+    <!-- PatternFly Styles -->
+    <!--<link rel="stylesheet" href="css/mystyles.css">-->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css">
+
+    <!-- JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/js/patternfly.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.1/vertx-eventbus.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vertx/3.5.1/vertx-eventbus.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+    <!-- C3, D3 - Charting Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.5.4/c3.min.js"></script>
+
+    <script src="js/patient.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.2/jquery.matchHeight-min.js"></script>
+
+    <script>
+        const patients = {
+
+        };
+        $(document).ready(function () {
+            console.log("ready...");
+            // initialize tooltips
+            $('[data-toggle="tooltip"]').tooltip();
+
+            const eb = new EventBus('/eventbus');
+
+            patients.edson = new Patient("edson", 80, 180, 40);
+            patients.clement = new Patient("clement", 85, 176, 39);
+
+            // matchHeight the contents of each .card-pf and then the .card-pf itself
+            $(".row-cards-pf > [class*='col'] > .card-pf .card-pf-title").matchHeight();
+            $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-body").matchHeight();
+            $(".row-cards-pf > [class*='col'] > .card-pf > .card-pf-footer").matchHeight();
+            $(".row-cards-pf > [class*='col'] > .card-pf").matchHeight();
+
+            eb.onopen = function () {
+                console.log("Event bus opened");
+                eb.registerHandler('health', function (error, msg) {
+                    // console.log("Message: ", msg);
+                    // console.log(JSON.stringify(msg));
+                    const data = msg["body"];
+                    const patient = patients[data.patient];
+                    if (patient) {
+                        patient.addMeasure(data);
+                    }
+                });
+            };
+        });
+    </script>
+</head>
+
+<body class="cards-pf">
+
+<!-- PatternFly Horizontal Nav -->
+<nav class="navbar navbar-default navbar-pf" role="navigation">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+            <!--<img src="node_modules/patternfly/dist/img/brand.svg" alt="Reactive Event Sourcing demo"/>-->
+            <span>Reactive Event Sourcing and Data Streaming Demo - RxEs</span>
+        </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-collapse-1">
+    </div>
+</nav>
+
+<div id="main" class="container-fluid container-cards-pf">
+
+</div>
+
+</body>
+
+</html>
