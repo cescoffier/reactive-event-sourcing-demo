@@ -29,6 +29,7 @@ public class DatabaseVerticle extends AbstractVerticle {
                 .put("driver_class", Driver.class.getName())
                 .put("user", System.getenv("MYSQL_USER"))
                 .put("password", System.getenv("MYSQL_PASSWORD"))
+                .put("useSSL", false)
         );
 
         vertx.eventBus().<JsonObject>consumer("measures").toFlowable()
@@ -57,6 +58,7 @@ public class DatabaseVerticle extends AbstractVerticle {
             .add(data.getJsonObject("glucose").getDouble("value"));
         return connection
             .rxUpdateWithParams(INSERT, params)
+            .doOnSuccess(ur -> System.out.println("Data written: " + data.encode()))
             .toCompletable();
     }
 

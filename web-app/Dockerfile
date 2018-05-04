@@ -1,6 +1,6 @@
 FROM fabric8/java-alpine-openjdk8-jre
 
-EXPOSE 8084
+EXPOSE 8080
 
 # Copy dependencies
 COPY target/dependency/* /deployments/libs/

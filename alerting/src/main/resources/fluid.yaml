@@ -1,6 +1,6 @@
 # global config
 kafka:
-  bootstrap.servers: kafka:9092
+  bootstrap.servers: broker-kafka:9092
   key.serializer: org.apache.kafka.common.serialization.StringSerializer
   key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
   acks: 1

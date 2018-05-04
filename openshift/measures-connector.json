@@ -10,7 +10,7 @@
     "database.server.id": "184054",
     "database.server.name": "rxes",
     "database.whitelist": "measures",
-    "database.history.kafka.bootstrap.servers": "kafka-broker:9092",
+    "database.history.kafka.bootstrap.servers": "broker-kafka.reactive-data-stream.svc:9092",
     "database.history.kafka.topic": "schema-changes.measures"
   }
 }

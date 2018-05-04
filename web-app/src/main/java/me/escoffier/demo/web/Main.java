@@ -38,7 +38,7 @@ public class Main {
         AmqpBridge bridge = AmqpBridge.create(vertx);
 
         // Start the bridge, then use the event loop thread to process things thereafter.
-        bridge.start("activemq", 5672, res -> {
+        bridge.start("broker-amq-amqp", 5672, "admin", "admin", res -> {
             if (!res.succeeded()) {
                 System.out.println("Bridge startup failed: " + res.cause());
                 rc.response().setStatusCode(500).end(res.cause().getMessage());

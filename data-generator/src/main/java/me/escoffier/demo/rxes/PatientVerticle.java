@@ -20,9 +20,9 @@ public class PatientVerticle extends AbstractVerticle {
 
     @Override
     public void start() {
-        vertx.setPeriodic(1000, x -> {
+        vertx.setPeriodic(2000, x -> {
             JsonObject measure = patient.measure();
-//            log.info("Generating measures: {}", measure.encode());
+            log.info("Generating measures: {}", measure.encode());
             vertx.eventBus().send("measures", measure);
         });
     }

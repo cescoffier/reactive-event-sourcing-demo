@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("==== ENVIRONMENT ===");
-        System.getenv().entrySet().forEach(e -> System.out.println("\t" + e.getKey() + "=" + e.getValue()));
+        System.getenv().forEach((key, value) -> System.out.println("\t" + key + "=" + value));
         System.out.println("====================");
 
         Vertx vertx = Vertx.vertx();

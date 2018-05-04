@@ -1,6 +1,7 @@
 package me.escoffier.demo.rxes.dbz;
 
 import io.reactivex.Completable;
+import io.vertx.amqpbridge.AmqpBridgeOptions;
 import io.vertx.amqpbridge.AmqpConstants;
 import io.vertx.core.json.JsonObject;
 import io.vertx.reactivex.amqpbridge.AmqpBridge;
@@ -43,7 +44,7 @@ public class Main {
     }
 
     private static Completable startFluidMediation(Vertx vertx) {
-        Fluid fluid = new Fluid(vertx);
+        Fluid fluid = Fluid.create(vertx);
         return setupAmqpBridge(vertx)
             .doOnComplete(() -> fluid.deploy(CDCEventReceiver.class))
             .doOnComplete(() -> fluid.deploy(AlertBranchMediator.class));
@@ -52,7 +53,7 @@ public class Main {
     private static Completable setupAmqpBridge(Vertx vertx) {
         AmqpBridge bridge = AmqpBridge.create(vertx);
         LOGGER.info("Starting AMQP bridge...");
-        return bridge.rxStart("activemq", 5672)
+        return bridge.rxStart("broker-amq-amqp", 5672, "admin", "admin")
             .map(ab -> ab.createProducer("health-data"))
             .flatMapCompletable(producer -> {
                 MessageConsumer<JsonObject> data = vertx.eventBus().consumer("measures");

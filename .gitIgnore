@@ -6,3 +6,4 @@ alerting/src/main/resources/secrets.json
 *.iml
 .idea
 target
+/openshift/strimzi-0.3.0/
