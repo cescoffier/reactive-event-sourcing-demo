@@ -53,7 +53,7 @@ public class Main {
                 .createConsumer("health-data");
             consumer.toFlowable()
                 .map(Message::body)
-                .sample(500, TimeUnit.MILLISECONDS)
+                .sample(50, TimeUnit.MILLISECONDS)
                 .forEach(json -> {
                     JsonObject payload = json.getJsonObject(AmqpConstants.BODY);
                     vertx.eventBus().publish("health", payload);
