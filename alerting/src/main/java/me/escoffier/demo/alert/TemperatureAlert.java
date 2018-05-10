@@ -17,12 +17,16 @@ public class TemperatureAlert {
     @Outbound("alerts")
     public Flowable<JsonObject> detect(@Inbound("health") Flowable<JsonObject> measures) {
         return measures
-            .flatMapMaybe(json -> {
-                String patient = json.getString("patient");
-                double temp = json.getDouble("temperature");
+            .flatMapMaybe(json ->
+            {
+                String patient = json
+                    .getString("patient");
+                double temp = json
+                    .getDouble("temperature");
 
                 if (temp >= 38) {
-                    return Maybe.just(new JsonObject().put("patient", patient).put("alert",
+                    return Maybe.just(new JsonObject().put("patient", patient)
+                        .put("alert",
                         "Temperature reached an abnormal level: " + temp));
                 } else {
                     return Maybe.empty();

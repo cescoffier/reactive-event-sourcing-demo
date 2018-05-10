@@ -10,7 +10,8 @@ import me.escoffier.fluid.annotations.Inbound;
 public class CDCEventReceiver {
 
     @Function(outbound = "measures")
-    public JsonObject transformCdcToMeasures(@Inbound("cdc") JsonObject cdc) {
+    public JsonObject transformCdcToMeasures
+        (@Inbound("cdc") JsonObject cdc) {
         JsonObject payload = cdc.getJsonObject("payload");
         JsonObject after = payload.getJsonObject("after");
         return after.put("patient", after.getString("user"));

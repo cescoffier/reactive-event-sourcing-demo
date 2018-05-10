@@ -23,14 +23,15 @@ public class DataGeneratorVerticle extends AbstractVerticle {
     private void createPatients() {
         LOGGER.info("Create patients");
 
-        Patient edson = new Patient(
-            "edson",
+        Patient marius = new Patient(
+            "marius",
             new BloodPressureGenerator("pressure", 100, 140, 3, 60, 90, 3),
             new BloodGlucoseGenerator("glucose", 85, 140, 5),
             new BodyTemperatureGenerator("temperature", 36, 39, 0.5)
         );
 
-        vertx.getDelegate().deployVerticle(new PatientVerticle(edson));
+        vertx.getDelegate()
+            .deployVerticle(new PatientVerticle(marius));
 
         Patient clement = new Patient(
             "clement",
@@ -39,6 +40,7 @@ public class DataGeneratorVerticle extends AbstractVerticle {
             new BodyTemperatureGenerator("temperature", 36.4, 38, 0.3)
         );
 
-        vertx.getDelegate().deployVerticle(new PatientVerticle(clement));
+        vertx.getDelegate()
+            .deployVerticle(new PatientVerticle(clement));
     }
 }

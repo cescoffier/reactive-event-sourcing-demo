@@ -55,8 +55,10 @@ public class Main {
                 .map(Message::body)
                 .sample(50, TimeUnit.MILLISECONDS)
                 .forEach(json -> {
-                    JsonObject payload = json.getJsonObject(AmqpConstants.BODY);
-                    vertx.eventBus().publish("health", payload);
+                    JsonObject payload =
+                        json.getJsonObject(AmqpConstants.BODY);
+                    vertx.eventBus().publish("health",
+                        payload);
                 });
         });
     }
